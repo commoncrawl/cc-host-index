@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>{{ title }}</title>
+</head>
+<body>
+
+{% for k, image in plots.items() %}
+
+  <p>{{ image | safe }}</p>
+
+{% endfor %}
+
+</body>
+</html>
+

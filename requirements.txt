@@ -1,0 +1,9 @@
+duckdb
+pyarrow
+pandas
+matplotlib
+jinja2
+surt
+
+# development
+flake8
