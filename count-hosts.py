@@ -1,10 +1,11 @@
 import sys
 import time
 
-from surt import surt
 import duckdb
 
 import duck_utils
+import utils
+
 
 surts = []
 
@@ -14,11 +15,7 @@ host_index = duck_utils.open_host_index()
 for fname in sys.argv[1:]:
     with open(fname, 'r') as fd:
         for line in fd:
-            surt_host_name, extra = surt(line).split(')/', 1)
-            if extra:
-                print('skipping because extra is', repr(extra))
-                # discard everything that is a subset of a web host
-                continue
+            surt_host_name = utils.thing_to_surt_host_name(line)
             surts.append(surt_host_name)
 print('read surts:')
 print(surts)
@@ -30,7 +27,6 @@ SELECT
   CAST(SUM(fetch_200) AS INT64) AS sum_fetch_200
 FROM host_index
 WHERE contains(ARRAY [{surt_list}], surt_host_name)
-AND url_host_tld = 'gov'
 GROUP BY crawl
 ORDER BY crawl ASC
 '''

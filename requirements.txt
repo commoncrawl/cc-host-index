@@ -4,6 +4,8 @@ pandas
 matplotlib
 jinja2
 surt
+pytest
+pytest-sugar
 
 # development
 flake8

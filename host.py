@@ -4,9 +4,11 @@ import io
 import duckdb
 import pyarrow.csv as csv
 import matplotlib.pyplot as plt
+import surt
 
 import duck_utils
 import graph_utils
+import utils
 
 
 host_sql = '''
@@ -216,10 +218,15 @@ def make_plot(surt_host_name, host_index):
 
 
 def main():
-    duck_utils.init_duckdb_httpfs()
-    #host_index = duck_utils.open_host_index('../cc-host-index-builder/host-index-testing/v1/')
-    host_index = duck_utils.open_host_index()  # grep='CC-MAIN-2022')
-    for surt_host_name in sys.argv[1:]:
+    verbose = 1
+    duck_utils.init_duckdb_httpfs(verbose=verbose)
+    grep = None
+    #grep = 'CC-MAIN-2022'
+    host_index = duck_utils.open_host_index(grep=grep, verbose=verbose)
+    for thing in sys.argv[1:]:
+        surt_host_name = utils.thing_to_surt_host_name(thing)
+        if not surt_host_name:
+            continue
         make_plot(surt_host_name, host_index)
 
 

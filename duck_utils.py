@@ -17,7 +17,7 @@ def init_duckdb_httpfs(verbose=0):
     # this defaults off, but seems like a good idea for httpfs
     duckdb.sql('SET enable_object_cache = true')
 
-    if verbose:
+    if verbose > 1:
         duckdb.sql('SET enable_http_logging = true')
         print('writing duckdb_http log to duckdb_http.log', file=sys.stderr)
         duckdb.sql("SET http_logging_output = './duckdb_http.log'")
@@ -69,4 +69,7 @@ def open_host_index(paths=None, bucket='https://data.commoncrawl.org', grep=None
     if len(paths) < 1:
         print(paths)
         raise ValueError('no parquet files found')
+    else:
+        if verbose:
+            print(f'{len(paths)} paths found')
     return duckdb.read_parquet(paths, hive_partitioning=True)

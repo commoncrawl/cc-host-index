@@ -11,6 +11,7 @@ color_list = [  # IBM palette for color-blindness
 
 # https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html to add more
 ls_list = ['solid', 'dashed', 'dashdot', 'dotted']
+marker_list = ['o', 'v', '^', 's', 'd']
 
 combinations = len(color_list) * len(ls_list)
 
