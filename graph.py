@@ -15,18 +15,29 @@ host_sql = '''
 SELECT
   {cols}
 FROM host_index
-WHERE surt_host_name = '{surt_host_name}'
+WHERE surt_host_name = '{surt_host_name}'{and_tld}
 ORDER BY crawl ASC
 '''
 
-sub_host_sql = '''
+subdomain_sql = '''
 SELECT
   {cols}
 FROM host_index
-WHERE surt_host_name LIKE '{surt_host_name}'
+WHERE surt_host_name LIKE '{surt_host_name}'{and_tld}
 GROUP BY crawl
 ORDER BY crawl ASC
 '''
+
+many_host_sql = '''
+SELECT
+  crawl,
+  CAST(SUM(fetch_200) AS INT64) AS sum_fetch_200
+FROM host_index
+WHERE contains(ARRAY [{surt_list}], surt_host_name){and_tld}
+GROUP BY crawl
+ORDER BY crawl ASC
+'''
+
 
 host_columns = {
     # list order does matter for the graphs
@@ -39,6 +50,9 @@ host_columns = {
 domain_columns = {
     'sum': ['crawl', 'fetch_200', 'fetch_200_lote'],
 }
+many_host_columns = {
+    'sum': ['crawl', 'fetch_200'],
+}
 
 def surt_host_name_to_title(surt_host_name):
     parts = list(reversed(surt_host_name.split(',')))
@@ -48,14 +62,31 @@ def surt_host_name_to_title(surt_host_name):
 
 
 def get_surt_host_name_values(host_index, surt_host_name, col_names):
+    if not isinstance(surt_host_name, str):
+        # if not a string, it's a list of strings
+        surt_list = ','.join(f"'{s}'" for s in surt_host_name)
+
+        tlds = set([s.split(',', 1)[0] for s in surt_host_name])
+        if len(tlds) == 1:
+            tld = next(iter(tlds))
+            and_tld = f" AND url_host_tld = '{tld}'"
+        else:
+            and_tld = ''
+
+        sql = many_host_sql.format(surt_list=surt_list, and_tld=and_tld)
+        return duckdb.sql(sql).arrow()
+
+    tld = surt_host_name.split(',', 1)[0]
+    and_tld = f" AND url_host_tld = '{tld}'"
     if surt_host_name.endswith(','):
+        col_names.remove('crawl')
         cols = ', '.join(f'CAST(SUM({col}) AS INT64) AS sum_{col}' for col in col_names)
         cols = 'crawl, '+cols
-        sql = sub_host_sql.format(cols=cols, surt_host_name=surt_host_name+'%')
+        sql = subdomain_sql.format(cols=cols, surt_host_name=surt_host_name+'%', and_tld=and_tld)
         print(sql)
     else:
         cols = ', '.join(col_names)
-        sql = host_sql.format(cols=cols, surt_host_name=surt_host_name)
+        sql = host_sql.format(cols=cols, surt_host_name=surt_host_name, and_tld=and_tld)
         print(sql)
     return duckdb.sql(sql).arrow()
 
@@ -81,7 +112,8 @@ def host_plot_values(table, col_names, title):
             side = 'r'
         else:
             side = 'l'
-        lines.append(['crawl', name, side, 'o', name])
+        # x, y, side, marker, label
+        lines.append(['crawl', name, side, None, name])
     return do_plot(df, lines, title)
 
 
@@ -99,7 +131,9 @@ def do_plot(df, lines, title):
             continue
         xvalues = df[x].astype(str)
         xvalues = [x.replace('CC-MAIN-', '') for x in xvalues]
-        color, ls = graph_utils.get_color(i)
+        ls = None
+        #color, ls = graph_utils.get_color_ls(i)
+        color, marker = graph_utils.get_color_marker(i)
         if side == 'l':
             our_line, = ax1.plot(xvalues, yvalues, marker=marker, label=label, color=color, ls=ls)
         else:
@@ -145,7 +179,7 @@ def get_host(host_index, surt_host_name, title):
 
 
 def plot_host(host_index, surt_host_name, title,
-              do_csv=False, do_png=False, do_html=False, html_template = 'host.html'):
+              do_csv=False, do_png=False, do_html=False, verbose=0, html_template = 'host.html'):
     tables, plots = get_host(host_index, surt_host_name, title)
     for key in tables:
         if do_csv:
@@ -168,7 +202,7 @@ def plot_host(host_index, surt_host_name, title,
             f.write(page)
 
 
-def get_domain(host_index, surt_host_name, title):
+def get_domain(host_index, surt_host_name, title, verbose=0):
     plots = {}
     tables = {}
     for key, cols in domain_columns.items():
@@ -183,11 +217,11 @@ def get_domain(host_index, surt_host_name, title):
 
 
 def plot_domain(host_index, surt_host_name, title,
-                do_csv=False, do_png=False, do_html=False, html_template = 'domain.html'):
-    tables, plots = get_domain(host_index, surt_host_name, title)
+                do_csv=False, do_png=False, do_html=False, verbose=0, html_template = 'domain.html'):
+    tables, plots = get_domain(host_index, surt_host_name, title, verbose=verbose)
     for key in tables:
         if do_csv:
-            out = surt_host_name + '_' + key
+            out = title + '_' + key
             host_csv(tables[key], out+'.csv')
         if do_png:
             with open (out+'.png', 'wb') as fd:
@@ -202,19 +236,19 @@ def plot_domain(host_index, surt_host_name, title,
         )
         template = env.get_template(html_template)
         page = template.render(title=title, plots=plots)
-        with open(surt_host_name + '.html', 'w') as f:
+        with open(title + '.html', 'w') as f:
             f.write(page)
 
 
-def make_plot(surt_host_name, host_index):
-    title = surt_host_name_to_title(surt_host_name)
-    if surt_host_name.endswith(','):
+def make_plot(surt_host_name, host_index, title, verbose=0):
+    if not isinstance(surt_host_name, str) or surt_host_name.endswith(','):
         plot_domain(host_index, surt_host_name, title,
-                    do_csv=True, do_png=True, do_html=True)
+                    do_csv=False, do_png=False, do_html=True, verbose=verbose)
         return
 
+    print('plot host')
     plot_host(host_index, surt_host_name, title,
-              do_csv=True, do_png=True, do_html=True)
+              do_csv=True, do_png=True, do_html=True, verbose=verbose)
 
 
 def main():
@@ -223,11 +257,25 @@ def main():
     grep = None
     #grep = 'CC-MAIN-2022'
     host_index = duck_utils.open_host_index(grep=grep, verbose=verbose)
+    if len(sys.argv) > 2 and sys.argv[1] == '-f':
+        assert len(sys.argv) == 3
+        surts = []
+        title =  sys.argv[2]
+        with open(sys.argv[2], encoding='utf8') as fd:
+            for thing in fd:
+                surt_host_name = utils.thing_to_surt_host_name(thing.rstrip(), verbose=verbose)
+                if surt_host_name:
+                    surts.append(surt_host_name)
+        if verbose:
+            print(f'making a plot for {len(surts)} hosts')
+        make_plot(surts, host_index, title, verbose=verbose)
+        return
     for thing in sys.argv[1:]:
         surt_host_name = utils.thing_to_surt_host_name(thing)
         if not surt_host_name:
             continue
-        make_plot(surt_host_name, host_index)
+        title = surt_host_name_to_title(surt_host_name)
+        make_plot(surt_host_name, host_index, title, verbose=verbose)
 
 
 if __name__ == '__main__':

@@ -72,4 +72,10 @@ def open_host_index(paths=None, bucket='https://data.commoncrawl.org', grep=None
     else:
         if verbose:
             print(f'{len(paths)} paths found')
-    return duckdb.read_parquet(paths, hive_partitioning=True)
+    try:
+        return duckdb.read_parquet(paths, hive_partitioning=True)
+    except Exception:
+        print('exception:')
+        print('HOST_INDEX=', os.environ['HOST_INDEX'])
+        print('HOST_INDEX_BUCKET=', os.environ['HOST_INDEX_BUCKET'])
+        raise

@@ -16,9 +16,14 @@ marker_list = ['o', 'v', '^', 's', 'd']
 combinations = len(color_list) * len(ls_list)
 
 
-def get_color(i):
+def get_color_ls(i):
     assert i < combinations
     return color_list[i % 5], ls_list[i // 5]
+
+
+def get_color_marker(i):
+    assert i < combinations
+    return color_list[i % 5], marker_list[i // 5]
 
 
 def png_to_embed(png):

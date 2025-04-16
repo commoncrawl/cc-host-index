@@ -5,7 +5,7 @@ import utils
 
 def test_thing_to_surt_host_name():
     tests = [
-        ('va', 'va'),
+        ('va', 'va,'),
         ('va,', 'va,'),
         ('va,*', 'va,'),
 
@@ -17,10 +17,11 @@ def test_thing_to_surt_host_name():
         #('.example.com/', 'com,example,'),  # python's library drops that leading dot
         ('sub.example.com', 'com,example,sub'),
         ('*.sub.example.com', 'com,example,sub,'),
+
+        ('example.com/foo', None),
     ]
 
     value_error = [
-        ('example.com/foo', ''),
         ('example.com,', ''),
     ]
 

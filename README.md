@@ -101,7 +101,6 @@ example programs need to be surt_host_names -- e.g. org,commoncrawl
 for commoncrawl.org, or org,commoncrawl, for *.commoncrawl.org.
 
 - host.py -- generates a bunch of pngs, csvs, and a webpage summarizing a host or wildcarded host
-- count-hosts.py -- given a file containing a bunch of surt hostnames, plot fetch\_200 over time
 
 ## Example SQL queries
 
@@ -200,12 +199,13 @@ LIMIT 10
 ## Expected changes in test v3
 
 - warc\_record\_length\_av will be renamed to \_avg (that was a typo)
-- more _pct columns
+- more \_pct columns
 - addition of indegree and outdegree for all hosts from the web graph
 - add unicode block information, similar to languages
 - improve language details to be more than only LOTE and LOTE_pct
 - prank10 needs its power law touched up (hcrank10 is much better)
 - there's a sort problem that .com shards have a smattering of not-.com hosts. This hurts performance.
+- add domain prank/hcrank
 - CI running against S3
 
 ## Contributing
