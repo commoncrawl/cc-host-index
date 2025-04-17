@@ -67,7 +67,7 @@ def open_host_index(paths=None, bucket='https://data.commoncrawl.org', grep=None
         paths = [p for p in paths if grep in p]
 
     if len(paths) < 1:
-        print(paths)
+        print('HOST_INDEX', os.environ.get('HOST_INDEX'), 'HOST_INDEX_BUCKET', os.environ.get('HOST_INDEX_BUCKET'))
         raise ValueError('no parquet files found')
     else:
         if verbose:
