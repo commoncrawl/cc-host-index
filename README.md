@@ -31,6 +31,21 @@ the web graph, and our raw crawler logs.
   - `warc_record_length_median, warc_record_length_av` (will be renamed to _avg in v3)
 - the full schema is at `athena_schema.v2.sql`
 
+## Examples
+
+US Federal government websites in .gov:
+
+![current-federal.txt_sum.png](https://raw.githubusercontent.com/commoncrawl/cc-host-index-media/current-federal.txt_sum.png)
+
+[See all graphs from this dataset](https://raw.githubusercontent.com/commoncrawl/cc-host-index-media/current-federal.txt.html)
+
+commoncrawl.org fetch:
+
+![current-federal.txt_sum.png](https://raw.githubusercontent.com/commoncrawl/cc-host-index-media/commoncrawl.org_fetch.png)
+
+[See all graphs from this dataset](https://raw.githubusercontent.com/commoncrawl/cc-host-index-media/commoncrawl.org.html)
+
+
 ## Setup
 
 The host index can either be used in place at AWS, or you can download
@@ -100,7 +115,7 @@ SELECT COUNT(*) FROM cchost_index_testing_v2
 
 ## Python code examples
 
-The included script graph.py knows how to make csvs, png images, and webpages containing
+The included script `graph.py` knows how to make csvs, png images, and webpages containing
 these images. It runs in 3 styles:
 
 - one web host: `python ./graph.py example.com`
