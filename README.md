@@ -109,6 +109,9 @@ these images. It runs in 3 styles:
 
 Yes, these commands take a while to run.
 
+This repo also has `duckdb-to-csv.py`, which you can use
+to run a single SQL command and get csv output.
+
 ## Example SQL queries
 
 Host fetches, non-English count, and ranking. Note the use of `url_host_tld` ... that is recommended
@@ -208,7 +211,7 @@ LIMIT 10
 ```
 
 | # | crawl | surt\_host\_name | hcrank10 | fetch\_200\_lote\_pct | fetch\_200\_lote |
-| --- |  --- |  --- |  --- |  --- |  --- | 
+| --- |  --- |  --- |  --- |  --- |  --- |
 | 1 | CC-MAIN-2025-13 | org,wikipedia,fr | 5.885 | 99 | 55334 |
 | 2 | CC-MAIN-2025-13 | org,wikipedia,es | 5.631 | 100 | 48527 |
 | 3 | CC-MAIN-2025-13 | com,chrome,developer | 5.62 | 92 | 29298 |
@@ -229,12 +232,12 @@ LIMIT 10
 
 ## Expected changes in test v3
 
-- warc\_record\_length\_av will be renamed to \_avg (that was a typo)
-- more \_pct columns
+- `warc_record_length_av` will be renamed to `_avg` (that was a typo)
+- more `_pct` columns
 - addition of indegree and outdegree for all hosts from the web graph
 - add unicode block information, similar to languages
-- improve language details to be more than only LOTE and LOTE_pct
-- prank10 needs its power law touched up (hcrank10 is much better)
+- improve language details to be more than only LOTE and LOTE\_pct
+- prank10 needs its power law touched up (hcrank10 might change too)
 - there's a sort problem that .com shards have a smattering of not-.com hosts. This hurts performance.
 - add domain prank/hcrank
 - CI running against S3
