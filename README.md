@@ -35,15 +35,15 @@ the web graph, and our raw crawler logs.
 
 US Federal government websites in .gov:
 
-![current-federal.txt_sum.png](https://raw.githubusercontent.com/commoncrawl/cc-host-index-media/current-federal.txt_sum.png)
+![current-federal.txt_sum.png](https://commoncrawl.github.io/cc-host-index-media/current-federal.txt_sum.png)
 
-[See all graphs from this dataset](https://raw.githubusercontent.com/commoncrawl/cc-host-index-media/current-federal.txt.html)
+[See all graphs from this dataset](https://commoncrawl.github.io/cc-host-index-media/current-federal.txt.html)
 
 commoncrawl.org fetch:
 
-![current-federal.txt_sum.png](https://raw.githubusercontent.com/commoncrawl/cc-host-index-media/commoncrawl.org_fetch.png)
+![commoncrawl.org_fetch.png](https://commoncrawl.github.io/cc-host-index-media/commoncrawl.org_fetch.png)
 
-[See all graphs from this dataset](https://raw.githubusercontent.com/commoncrawl/cc-host-index-media/commoncrawl.org.html)
+[See all graphs from this dataset](https://commoncrawl.github.io/cc-host-index-media/commoncrawl.org.html)
 
 
 ## Setup
