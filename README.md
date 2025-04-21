@@ -263,9 +263,10 @@ LIMIT 10
 
 - `warc_record_length_av` will be renamed to `_avg` (that was a typo)
 - more `_pct` columns
-- addition of indegree and outdegree for all hosts from the web graph
-- add unicode block information, similar to languages
+- count truncations: length, time, disconnect, unspecified
+- addition of indegree and outdegree from the web graph
 - improve language details to be more than only LOTE and LOTE\_pct
+- add unicode block information, similar to languages
 - prank10 needs its power law touched up (hcrank10 might change too)
 - there's a sort problem that .com shards have a smattering of not-.com hosts. This hurts performance.
 - add domain prank/hcrank
@@ -273,8 +274,9 @@ LIMIT 10
 
 ## Contributing
 
-We'd love to get code contributions! Here are some clues:
+We'd love to get testing and code contributions! Here are some clues:
 
+- We'd love to hear if you tried it out, and what your comments are
 - We'd love to have python examples using Athena, similar to duckdb
 - We'd love to have more python examples
 - Please use pyarrow whenever possible
