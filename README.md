@@ -11,12 +11,12 @@ the web graph, and our raw crawler logs.
 - What popular websites have a lot of non-English content?
 - What popular websites seem to have so little content that we might need to execute javascript to crawl them?
 
-# Example questions that we'll use to improve our crawl
+## Example questions that we'll use to improve our crawl
 
 - What's the full list of websites where more than half of the webpages are primarily not English?
 - What popular websites end our crawls with most of their crawl budget left uncrawled?
 
-# Example questions that future versions of this host index can answer
+## Example questions that future versions of this host index can answer
 
 - What websites have a lot of content in particular languages?
 - What websites have a lot of content with particular Unicode scripts?
