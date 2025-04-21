@@ -39,12 +39,12 @@ US Federal government websites in .gov:
 
 [See all graphs from this dataset](https://commoncrawl.github.io/cc-host-index-media/current-federal.txt.html)
 
-commoncrawl.org fetch:
+commoncrawl.org fetch. You can see that we revamped our website in CC-2023-14, which caused a lot of
+permanent redirects to be crawled in the next few crawls:
 
 ![commoncrawl.org_fetch.png](https://commoncrawl.github.io/cc-host-index-media/commoncrawl.org_fetch.png)
 
 [See all graphs from this dataset](https://commoncrawl.github.io/cc-host-index-media/commoncrawl.org.html)
-
 
 ## Setup
 
