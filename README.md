@@ -5,6 +5,9 @@ index for a crawl is a table which contains a single row for each
 web host, combining aggregated information from the columnar index,
 the web graph, and our raw crawler logs.
 
+*This document discusses the testing v2 version of this dataset -- it
+will change before its final release.*
+
 ## Example questions this index can answer
 
 - What's our history of crawling a particular website, or group of websites?
