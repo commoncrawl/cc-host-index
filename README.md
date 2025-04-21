@@ -7,20 +7,31 @@ the web graph, and our raw crawler logs.
 
 ## Example questions this index can answer
 
-- How well are we crawling a particular website?
-- How well are we crawling groups of websites?
+- What's our history of crawling a particular website, or group of websites?
 - What popular websites have a lot of non-English content?
-- What popular websites appear to need javascript to find content?
+- What popular websites seem to have so little content that we might need to execute javascript to crawl them?
+
+# Example questions that we'll use to improve our crawl
+
+- What's the full list of websites where more than half of the webpages are primarily not English?
+- What popular websites end our crawls with most of their crawl budget left uncrawled?
+
+# Example questions that future versions of this host index can answer
+
+- What websites have a lot of content in particular languages?
+- What websites have a lot of content with particular Unicode scripts?
 
 ## Highlights of the schema
 
-- there is a Hive-style partition on `crawl`, which is a crawl name like CC-MAIN-2025-13.
+- there is a Hive-style partition on `crawl`, which is a crawl name like `CC-MAIN-2025-13`.
 - there is one row for every webhost in the web graph, even if we didn't crawl that website in that particular crawl
 - the primary key is `surt_host_name`, which is quirky (commoncrawl.org -> org,commoncrawl)
 - there is also `url_host_tld`, which we recommend that you use whenever possible ("org" for commoncrawl.org)
 - there are counts of what we stored in our archive (warc, crawldiagnostics, robots)
  - `fetch_200, fetch_3xx, fetch_4xx, fetch_5xx, fetch_gone, fetch_notModified, fetch_other, fetch_redirPerm, fetch_redirTemp`
  - `robots_200, robots_3xx, robots_4xx, robots_5xx, robots_gone, robots_notModified, robots_other, robots_redirPerm, robots_redirTemp`
+- there is ranking information from the web graph: harmonic centrality, page rank, and both normalized to a 0-10 scale
+  - `hcrank`, `prank`, `hcrank10`, `prank10`
 - there is a language summary (for now, just the count of languages other than English (LOTE))
   - `fetch_200_lote, fetch_200_lote_pct`
 - for a subset of the numbers, there is a `foo_pct`, which can help you avoid doing math in SQL. It is an integer 0-100.
@@ -33,7 +44,7 @@ the web graph, and our raw crawler logs.
 
 ## Examples
 
-US Federal government websites in .gov:
+US Federal government websites in the *.gov domain (about 1,400 domains, y-axis scale is millions):
 
 ![current-federal.txt_sum.png](https://commoncrawl.github.io/cc-host-index-media/current-federal.txt_sum.png)
 
