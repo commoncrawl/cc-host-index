@@ -90,16 +90,16 @@ export HOST_INDEX_BUCKET=s3://commoncrawl/
 
 ### Setup -- duckdb with local files
 
-Install [cc-downloader](https://github.com/commoncrawl/cc-downloader/)
-
-Then, NOT TESTED!
+If you have enough local disk space (180 gigabytes), install
+[cc-downloader](https://github.com/commoncrawl/cc-downloader/)
+and then:
 
 ```
 wget https://data.commoncrawl.org/projects/host-index-testing/v2.paths.gz
-cc-downloader download v2.paths.gz
+cc-downloader download v2.paths.gz .
 ```
 
-Then, wherever you move the downloaded files, point at the top directory:
+Wherever you move the downloaded files, point at the top directory:
 
 ```
 export HOST_INDEX=/home/cc-pds/commoncrawl/projects/host-index-testing/v2/
