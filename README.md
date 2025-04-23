@@ -136,10 +136,12 @@ these images. It runs in 3 styles:
 - wildcared subdomains: `python ./graph.py *.example.com`
 - a list of hosts: `python ./graph.py -f list_of_hosts.txt`
 
-Yes, these commands take a while to run.
+Yes, these commands take a while to run, because Parquet is a bad
+choice to look up a single row. On my machine the example.com graph
+takes 5.5 minutes of CPU time.
 
-This repo also has `duckdb-to-csv.py`, which you can use
-to run a single SQL command and get csv output.
+This repo also has `duckdb-to-csv.py`, which you can use to run a
+single SQL command and get csv output.
 
 ## Example SQL queries
 
@@ -271,8 +273,9 @@ LIMIT 10
 - there's a sort problem that .com shards have a smattering of not-.com hosts. This hurts performance.
 - add domain prank/hcrank
 - CI running against S3
-- `robots_count_distinct`
-- `robots_digest` (if there is exactly 1 robots file)
+- `robots_digest_count_distinct`
+- `robots_digest` (if there is exactly 1 robots digest)
+- Summarize `fetch_redirect`: same surt, same surt host, other.
 
 ## Contributing
 
