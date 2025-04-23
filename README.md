@@ -267,10 +267,12 @@ LIMIT 10
 - addition of indegree and outdegree from the web graph
 - improve language details to be more than only LOTE and LOTE\_pct
 - add unicode block information, similar to languages
-- prank10 needs its power law touched up (hcrank10 might change too)
+- `prank10` needs its power law touched up (`hcrank10` might change too)
 - there's a sort problem that .com shards have a smattering of not-.com hosts. This hurts performance.
 - add domain prank/hcrank
 - CI running against S3
+- `robots_count_distinct`
+- `robots_digest` (if there is exactly 1 robots file)
 
 ## Contributing
 
