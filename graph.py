@@ -55,7 +55,7 @@ domain_columns = {
 many_host_columns = {
     'sum': ('crawl', 'fetch_200'),
     'sum_lote': ('crawl', 'fetch_200', 'fetch_200_lote'),
-    'sum_nutch': ('crawl', 'fetch_200', 'fetch_200_lote', 'nutch_numRecords', 'nutch_fetched', 'nutch_unfetched', 'nutch_gone', 'nutch_redirTemp', 'nutch_redirPerm', 'nutch_notModified'),
+    'sum_nutch': ('crawl', 'fetch_200', 'fetch_200_lote', 'nutch_fetched', 'nutch_unfetched', 'nutch_gone', 'nutch_redirTemp', 'nutch_redirPerm', 'nutch_notModified'),
 }
 
 
