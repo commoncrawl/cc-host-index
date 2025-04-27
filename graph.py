@@ -65,27 +65,45 @@ def left_right(cols):
     rank10 = tuple(col for col in cols if col in {'hcrank10', 'prank10'})
     rank = tuple(col for col in cols if col in {'hcrank', 'prank'})
     pct = tuple(col for col in cols if col.endswith('_pct'))
-    other = set(cols)
-    other = other.difference(rank10).difference(rank).difference(pct)
-    other = tuple(other)
+    left = set(cols)
+    left = left.difference(rank10).difference(rank).difference(pct)
+    left = tuple(left)
 
     # at most two
-    # put other on the left, if present
-    count = [bool(rank10), bool(rank), bool(pct), bool(other)].count(True)
+    # put left on the left, if present
+    count = [bool(rank10), bool(rank), bool(pct), bool(left)].count(True)
     if count > 2:
         raise ValueError('too many scales: '+repr(cols))
 
-    if other:
-        return other, rank10 or rank or pct  # 2nd can be None
+    # this order matters
+    if rank10:
+        rlabel = 'rank10'
+    elif rank:
+        rlabel = 'rank'
+    elif pct:
+        rlabel = 'percent'
+    else:
+        rlabel = None
+
+    if left:
+        if rank10 or rank or pct:
+            return left, rank10 or rank or pct, rlabel
+        else:
+            return left, tuple(), None
 
     if rank:
-        print('foo', rank, rank10, pct)
-        return rank, rank10 or pct
+        if rank10 or pct:
+            return rank, rank10 or pct, rlabel
+        else:
+            return rank, tuple(), None
 
     if pct:
-        return pct, rank10
+        if rank10:
+            return pct, rank10, 'rank10'
+        else:
+            return pct, tuple(), None
 
-    return rank10, tuple()
+    return rank10, tuple(), None
 
 
 def surt_host_name_to_title(surt_host_name):
@@ -138,7 +156,7 @@ def host_csv(table, fname):
 def plot_values(table, col_names, title):
     df = table.to_pandas()
     cols = list(df.columns)
-    left, right = left_right(cols)
+    left, right, rlabel = left_right(cols)
 
     lines = []
     for name in col_names:
@@ -147,13 +165,13 @@ def plot_values(table, col_names, title):
         side = 'l' if name in left else 'r'
         # x, y, side, marker, label
         lines.append(['crawl', name, side, None, name])
-    return do_plot(df, lines, title)
+
+    return do_plot(df, lines, title, rlabel)
 
 
-def do_plot(df, lines, title):
+def do_plot(df, lines, title, rlabel):
     fig, ax1 = plt.subplots()
     ax2 = None
-    saw_right = False
     our_lines = []
 
     for i, line in enumerate(lines):
@@ -172,16 +190,15 @@ def do_plot(df, lines, title):
         else:
             if not ax2:
                 ax2 = ax1.twinx()
-                ###ax2.set_ylim(top=10.0)  # the legend tends to get clobbered if you do this
             our_line, = ax2.plot(xvalues, yvalues, marker=marker, label=label, color=color, ls=ls)
-            saw_right = True
         our_lines.append(our_line)
+
     plt.xlabel('crawl')
     ax1.set_ylim(bottom=0)
-    if saw_right:
-        # use hcrank's color?
-        ax2.set_ylabel('rank')  # color=color # XXX might be _pct
+    if rlabel:
+        ax2.set_ylabel(rlabel)
         ax2.set_ylim(bottom=0)
+        ###ax2.set_ylim(top=10.0)  # the legend tends to get clobbered if you do this
     plt.title(title)
 
     # more complicated because of the twinx
