@@ -256,8 +256,10 @@ LIMIT 10
 
 ## Known bugs
 
+- Some of the partitions have a different schema from others, so you will get errors for some of the columns in some of
+the crawls. We recommend that you avoid using those crawls, and only use the columns you need.
 - When the S3 bucket is under heavy use, AWS Athena will sometimes throw 503 errors. We have yet to figure out how to increase the retry limit.
-- duckdb's https retries don't seem to work as advertised, so duckdb talking to AWS is also affected during periods of heavy usage.
+- duckdb's https retry behavior got much better in version 1.3.0, so update
 - Hint: https://status.commoncrawl.org/ has graphs of S3 performance for the last day, week, and month.
 - The sort order is a bit messed up, so database queries take more time than they should.
 
@@ -268,6 +270,7 @@ LIMIT 10
 - count truncations: length, time, disconnect, unspecified
 - addition of indegree and outdegree from the web graph
 - improve language details to be more than only LOTE and LOTE\_pct
+  - `content_language_top`, `content_language_top_pct`
 - add unicode block information, similar to languages
 - `prank10` needs its power law touched up (`hcrank10` might change too)
 - there's a sort problem that .com shards have a smattering of not-.com hosts. This hurts performance.
