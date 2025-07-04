@@ -1,0 +1,422 @@
+{
+  "type": "struct",
+  "fields": [
+    {
+      "name": "surt_host_name",
+      "nullable": "false",
+      "type": "string",
+      "metadata": {
+        "description": "Host name in SURT form",
+        "example": "com,example"
+      }
+    },
+    {
+      "name": "url_host_registered_domain",
+      "nullable": "false",
+      "type": "string",
+      "metadata": {
+        "description": "Registered domain of the host",
+        "example": "example.com"
+      }
+    },
+    {
+      "name": "url_host_tld",
+      "nullable": "false",
+      "type": "string",
+      "metadata": {
+        "description": "TLD of the host",
+        "example": "uk"
+      }
+    },
+    {
+      "name": "hcrank10",
+      "nullable": "false",
+      "type": "double",
+      "metadata": {
+        "description": "Harmonic centrality score, normalised to 0-10 scale",
+        "example": 2.988,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "prank10",
+      "nullable": "false",
+      "type": "double",
+      "metadata": {
+        "description": "PageRank score, normalised to 0-10 scale",
+        "example": 0.0,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "prank",
+      "nullable": "false",
+      "type": "double",
+      "metadata": {
+        "description": "PageRank score",
+        "example": 2.503322e-09,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "hcrank",
+      "nullable": "false",
+      "type": "double",
+      "metadata": {
+        "description": "Harmonic centrality score",
+        "example": 1.371761e+07,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "warc_record_length_av",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Mean length of WARC records for host",
+        "example": 543,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "warc_record_length_median",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Median length of WARC records for host",
+        "example": 17356,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_200",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of returned 2xx HTTP response response codes",
+        "example": 70,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_200_lote",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 200 OK HTTP response codes with language other than English",
+        "example": 0,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_200_lote_pct",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Percentage with 200 OK HTTP response codes and language other than English ",
+        "example": 100,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_3xx",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 3xx HTTP response codes other than 301, 302, 304, 307, and 308",
+        "example": 0,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_4xx",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 4xx HTTP response codes other than 404 and 410",
+        "example": 2,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_5xx",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 5xx HTTP response codes",
+        "example": 1,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_gone",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 404 and 410 HTTP response codes",
+        "example": 5,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_notModified",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 304 HTTP response codes",
+        "example": 1,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_other",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of HTTP response codes not otherwise specified",
+        "example": 0,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_redirPerm",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 301 and 308 HTTP response codes",
+        "example": 3,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "fetch_redirTemp",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 302 and 307 HTTP response codes",
+        "example": 2,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "nutch_fetched",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of URLs successfully fetched (aggregated over year)",
+        "example": 9,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_fetched_pct",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Percentage of URLs successfully fetched (aggregated over year)",
+        "example": 22,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_gone",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests either returning 404 and 410 HTTP response codes, with >3 failed retries, or denied by robots.txt (aggregated over year)",
+        "example": 14,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_gone_pct",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Percentage of requests either returning 404 and 410 HTTP response codes, with >3 failed retries, or denied by robots.txt (aggregated over year)",
+        "example": 100,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_notModified",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of HTTP 304 response codes (aggregated over year)",
+        "example": 15,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_notModified_pct",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Percentage of HTTP 304 response codes or where MD5 hash is unchanged (aggregated over year)",
+        "example": 92,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_numRecords",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Total number of records in hostdb (aggregated over year)",
+        "example": 41,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_redirPerm",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 301 and 308 HTTP response codes (aggregated over year)",
+        "example": 0,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_redirPerm_pct",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Percentage of 301 and 308 HTTP response codes (aggregated over year)",
+        "example": 50,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_redirTemp",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of 302 and 307 HTTP response codes (aggregated over year)",
+        "example": 1,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_redirTemp_pct",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Percentage of 302 and 307 HTTP response codes (aggregated over year)",
+        "example": 0,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_unfetched",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of unfetched pages in database, including transient failures (aggregated over year)",
+        "example": 6,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "nutch_unfetched_pct",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Percentage of unfetched pages in database, including transient failures (aggregated over year)",
+        "example": 100,
+        "source": "nutch"
+      }
+    },
+    {
+      "name": "robots_200",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning 200 OK HTTP response code",
+        "example": 4,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "robots_3xx",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning 3xx HTTP response codes other than 301, 302, 304, 307, and 308",
+        "example": 0,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "robots_4xx",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning 4xx HTTP response code other than 404 or 410",
+        "example": 0,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "robots_5xx",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning 5xx HTTP response code",
+        "example": 2,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "robots_gone",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning HTTP response codes other than 404 and 410",
+        "example": 0,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "robots_notModified",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning 304 HTTP response code",
+        "example": 3,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "robots_other",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning HTTP response code not otherwise specified",
+        "example": 2,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "robots_redirPerm",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning 301 or 308 HTTP response codes",
+        "example": 0,
+        "source": "columnar"
+      }
+    },
+    {
+      "name": "robots_redirTemp",
+      "nullable": "false",
+      "type": "integer",
+      "metadata": {
+        "description": "Count of requests for robots.txt returning 302 or 307 HTTP response codes",
+        "example": 0,
+        "source": "columnar"
+      }
+    }
+  ]
+}
