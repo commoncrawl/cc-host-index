@@ -195,7 +195,7 @@ def do_plot(df, lines, title, rlabel):
 
     plt.xlabel('crawl')
     ax1.set_ylim(bottom=0)
-    if rlabel:
+    if ax2 and rlabel: #ax2 might be none while rlabel exists, if "yvalues.sum() == 0.0" triggers continue
         ax2.set_ylabel(rlabel)
         ax2.set_ylim(bottom=0)
         ###ax2.set_ylim(top=10.0)  # the legend tends to get clobbered if you do this
