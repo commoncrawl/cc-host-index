@@ -35,7 +35,7 @@
       "metadata": {
         "description": "Harmonic centrality score, normalised to 0-10 scale",
         "example": 2.988,
-        "source": "columnar"
+        "source": "webgraph"
       }
     },
     {
@@ -45,7 +45,7 @@
       "metadata": {
         "description": "PageRank score, normalised to 0-10 scale",
         "example": 0.0,
-        "source": "columnar"
+        "source": "webgraph"
       }
     },
     {
@@ -55,7 +55,7 @@
       "metadata": {
         "description": "PageRank score",
         "example": 2.503322e-09,
-        "source": "columnar"
+        "source": "webgraph"
       }
     },
     {
@@ -65,7 +65,7 @@
       "metadata": {
         "description": "Harmonic centrality score",
         "example": 1.371761e+07,
-        "source": "columnar"
+        "source": "webgraph"
       }
     },
     {
@@ -74,7 +74,7 @@
       "type": "integer",
       "metadata": {
         "description": "Mean length of WARC records for host",
-        "example": 543,
+        "example": 30,
         "source": "columnar"
       }
     },
@@ -103,7 +103,7 @@
       "nullable": "false",
       "type": "integer",
       "metadata": {
-        "description": "Count of 200 OK HTTP response codes with language other than English",
+        "description": "Count of 200 OK HTTP response codes where start of content_languages is not eng",
         "example": 0,
         "source": "columnar"
       }
@@ -113,7 +113,7 @@
       "nullable": "false",
       "type": "integer",
       "metadata": {
-        "description": "Percentage with 200 OK HTTP response codes and language other than English ",
+        "description": "Percentage of total 200 OK HTTP response codes where start of content_languages is not eng",
         "example": 100,
         "source": "columnar"
       }
@@ -213,7 +213,7 @@
       "nullable": "false",
       "type": "integer",
       "metadata": {
-        "description": "Percentage of URLs successfully fetched (aggregated over year)",
+        "description": "Percentage of total number of records in hostdb with URLs successfully fetched (aggregated over year)",
         "example": 22,
         "source": "nutch"
       }
@@ -233,7 +233,7 @@
       "nullable": "false",
       "type": "integer",
       "metadata": {
-        "description": "Percentage of requests either returning 404 and 410 HTTP response codes, with >3 failed retries, or denied by robots.txt (aggregated over year)",
+        "description": "Percentage of total number of records in hostdb either returning 404 and 410 HTTP response codes, with >3 failed retries, or denied by robots.txt (aggregated over year)",
         "example": 100,
         "source": "nutch"
       }
@@ -253,7 +253,7 @@
       "nullable": "false",
       "type": "integer",
       "metadata": {
-        "description": "Percentage of HTTP 304 response codes or where MD5 hash is unchanged (aggregated over year)",
+        "description": "Percentage of total number of records in hostdb where HTTP 304 response codes or where MD5 hash is unchanged (aggregated over year)",
         "example": 92,
         "source": "nutch"
       }
@@ -283,7 +283,7 @@
       "nullable": "false",
       "type": "integer",
       "metadata": {
-        "description": "Percentage of 301 and 308 HTTP response codes (aggregated over year)",
+        "description": "Percentage of total number of records in hostdb returning 301 and 308 HTTP response codes (aggregated over year)",
         "example": 50,
         "source": "nutch"
       }
@@ -303,7 +303,7 @@
       "nullable": "false",
       "type": "integer",
       "metadata": {
-        "description": "Percentage of 302 and 307 HTTP response codes (aggregated over year)",
+        "description": "Percentage of total number of records in hostdb returning 302 and 307 HTTP response codes (aggregated over year)",
         "example": 0,
         "source": "nutch"
       }
@@ -323,7 +323,7 @@
       "nullable": "false",
       "type": "integer",
       "metadata": {
-        "description": "Percentage of unfetched pages in database, including transient failures (aggregated over year)",
+        "description": "Percentage of total number of records in hostdb which are unfetched pages, including transient failures (aggregated over year)",
         "example": 100,
         "source": "nutch"
       }
