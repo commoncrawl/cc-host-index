@@ -3,7 +3,7 @@ import argparse
 import json
 from string import Template
 
-# all types are mapped even if there is no change for simplicity
+# all types are mapped even if there is no change, for simplicity
 type_map = {
     "integer": "int",
     "double": "double",
@@ -40,7 +40,7 @@ args = parser.parse_args()
 with open(args.json_file) as f:
     json_schema = json.load(f)
 # json to sql type conversion is hard-coded dict
-cols_list = sorted([f"{entry['name']} {type_map[entry['type']]}" for entry in json_schema['fields']])
+cols_list = [f"{entry['name'].strip()} {type_map[entry['type']].strip()}" for entry in json_schema['fields']]
 columns = ',\n  '.join(cols_list)
 
 athena_schema = template.substitute(
