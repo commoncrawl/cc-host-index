@@ -259,7 +259,6 @@ LIMIT 10
 - Some of the partitions have a different schema from others, so you will get errors for some of the columns in some of
 the crawls. We recommend that you avoid using those crawls, and only use the columns you need.
 - When the S3 bucket is under heavy use, AWS Athena will sometimes throw 503 errors. We have yet to figure out how to increase the retry limit.
-- duckdb's https retry behavior got much better in version 1.3.0, so update
 - Hint: https://status.commoncrawl.org/ has graphs of S3 performance for the last day, week, and month.
 - The sort order is a bit messed up, so database queries take more time than they should.
 

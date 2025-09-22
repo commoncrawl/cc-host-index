@@ -130,7 +130,11 @@ def get_values(host_index, surt_host_name, col_names, verbose=0):
         sql = many_host_sql.format(cols=cols, surt_list=surt_list, and_tld=and_tld)
         if verbose:
             print(sql)
-        return duckdb.sql(sql).arrow()
+        result = duckdb.sql(sql).arrow()
+        # DuckDB >= 1.4 returns a RecordBatchReader; older releases return a pyarrow.Table
+        if hasattr(result, 'column_names'):
+            return result
+        return result.read_all()
 
     tld = surt_host_name.split(',', 1)[0]
     and_tld = f" AND url_host_tld = '{tld}'"
@@ -145,7 +149,12 @@ def get_values(host_index, surt_host_name, col_names, verbose=0):
 
     if verbose:
         print(sql)
-    return duckdb.sql(sql).arrow()
+
+    result = duckdb.sql(sql).arrow()
+    # DuckDB >= 1.4 returns a RecordBatchReader; older releases return a pyarrow.Table
+    if hasattr(result, 'column_names'):
+        return result
+    return result.read_all()
 
 
 def host_csv(table, fname):
