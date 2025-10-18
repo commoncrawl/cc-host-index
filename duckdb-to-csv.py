@@ -16,6 +16,6 @@ LIMIT 10
 '''
 
 host_index = duck_utils.open_host_index()
-table = duckdb.sql(sql).arrow()
+table = duckdb.sql(sql).fetch_arrow_table()
 with open(fname, 'wb') as fd:
     csv.write_csv(table, fd)
