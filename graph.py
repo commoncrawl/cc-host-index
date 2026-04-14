@@ -32,7 +32,7 @@ many_host_sql = '''
 SELECT
   {cols}
 FROM host_index
-WHERE regexp_matches(surt_host_name, '{surt_list_regexp}'){and_tld}
+WHERE ({surt_like_clause_list}){and_tld}
 GROUP BY crawl
 ORDER BY crawl ASC
 '''
@@ -116,7 +116,7 @@ def surt_host_name_to_title(surt_host_name):
 def get_values(host_index, surt_host_name, col_names, verbose=0):
     if not isinstance(surt_host_name, str):
         # if not a string, it's a list of strings
-        surt_list_regexp = '^(' + '|'.join(surt.rstrip(',') + (',.*' if surt.endswith(',') else '') for surt in surt_host_name) + ')$'
+        surt_like_clause_list = ' OR '.join(f"surt_host_name LIKE '{surt + ('%' if surt.endswith(',') else '')}'" for surt in surt_host_name)
 
         tlds = set([s.split(',', 1)[0] for s in surt_host_name])
         if len(tlds) == 1:
@@ -127,7 +127,7 @@ def get_values(host_index, surt_host_name, col_names, verbose=0):
 
         cols = ', '.join(f'CAST(SUM({col}) AS INT64) AS sum_{col}' for col in col_names if col != 'crawl')
         cols = 'crawl, '+cols
-        sql = many_host_sql.format(cols=cols, surt_list_regexp=surt_list_regexp, and_tld=and_tld)
+        sql = many_host_sql.format(cols=cols, surt_like_clause_list=surt_like_clause_list, and_tld=and_tld)
         if verbose:
             print(sql)
         return duckdb.sql(sql).fetch_arrow_table()
